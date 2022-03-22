@@ -90,6 +90,7 @@ readText:
     mov esi, 0              ; character counter
     
 .nextChar:
+    push esi
     cmp byte[eax], 97       ; check if letter = 'a'
     jz .aLetter
     jmp .endLetter          ; no coincidence doesn't print
@@ -132,6 +133,16 @@ readText:
     call drawLine           ; call draw line function
     
     pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
     
     pop edx
     pop ecx
@@ -140,7 +151,7 @@ readText:
     jmp .endLetter
     
 .endLetter:
-
+    pop esi
     inc esi                 ; increase the word counter
     inc eax                 ; increase the text direction
     cmp byte[eax], 0        ; if the text is not null analyse next character
@@ -207,15 +218,21 @@ drawLine:
     push ecx
     push edx
     
+    mov eax, esi
     mov edx, 0
     mov ecx, 42         ; the amount of characters that fit in a line
     div ecx             ; eax / 42. eax gets the qoutient and edx the remainder
-    mov ecx, 252        ; the amount of pixels in a line
+    push edx
+    mov ecx, 253        ; the amount of pixels in a line
     mul ecx             ; eax * 253. eax saves the result
     mov ecx, 6          ; because each line has 6 pixels of height
     mul ecx             ; eax * 6
     add edi, eax        ; add to the array direction the total amount of pixels for the lines
+    pop edx
     mov eax, edx        ; add the own line pixels
+    ;;
+    call iprintLF
+    ;;
     mul ecx             ; multiply by 6, each character has 6 pixels
     add edi, eax        ; complete the own line addition of pixels
         
@@ -231,25 +248,31 @@ drawLine:
     
     cmp ebx, edx
     jz .horizontalLine  ; if both y coordinates are the same, it is an horizontal line
+     
     
     jmp .finish         ; if it is neither of the options dont do the drawing
     
 .verticalLine:
     add edi, 253        ; since the first line doesn't has anything add 253 (the necessary to go to the next line)
-
+    sub ebx, 1          ; substract 1 until the y1 becomes 0
+    sub edx, 1          ; also substract the value of edx
+    cmp ebx, 1
+    jnz .verticalLine   ; if it is not 0 then the line is not printed yet
+    
+.verLineAux:
     mov al, 48         
     mov byte[edi], al   ; add a 0 in this space of memory ('0' ascii is 48)
-    
+    add edi, 253        ; increase edi by 253 for a new line
     inc ebx
     cmp ebx, edx        ; if y1 > y2 then the process is over
     jg .finish
-    jmp .verticalLine   ; if y1 <= y2 then go for the next line
+    jmp .verLineAux     ; if y1 <= y2 then go for the next line
         
 .horizontalLine:
     add edi, 253        ; pass to a new line until we reaxh the y level
     sub ebx, 1
-    cmp ebx, 0
-    jnz .horLineAux     ; jump to auxiliar function to print horizontal line
+    cmp ebx, 1
+    jnz .horizontalLine ; jump to auxiliar function to print horizontal line
 
 .horLineAux:
     mov bl, 48         
