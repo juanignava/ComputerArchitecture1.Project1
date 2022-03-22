@@ -29,7 +29,28 @@ readText:
     jz .dLetter
     
     cmp byte[eax], 101      ; check if letter = 'e'
-    jz .eLetter    
+    jz .eLetter
+    
+    cmp byte[eax], 102      ; check if letter = 'f'
+    jz .fLetter
+    
+    cmp byte[eax], 103      ; check if letter = 'g'
+    jz .gLetter
+    
+    cmp byte[eax], 104      ; check if letter = 'h'
+    jz .hLetter
+    
+    cmp byte[eax], 105      ; check if letter = 'i'
+    jz .iLetter  
+    
+    cmp byte[eax], 106      ; check if letter = 'j'
+    jz .jLetter 
+    
+    cmp byte[eax], 107      ; check if letter = 'k'
+    jz .kLetter 
+    
+    cmp byte[eax], 108      ; check if letter = 'l'
+    jz .lLetter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
     
     jmp .endLetter          ; no coincidence doesn't print
     
@@ -323,7 +344,304 @@ readText:
     pop ebx
     pop eax
     jmp .endLetter
-               
+ 
+.fLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.gLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    ;mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+    
+    ; vertical line
+    mov eax, 6              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 4              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter                            
+
+.hLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; vertical line
+    mov eax, 6              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter                                                                                  
+
+.iLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 4              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 4              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.jLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 4              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 4              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 4              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 5              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+.kLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; pos slope line
+    mov eax, 3              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; neg slope line
+    mov eax, 3              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+   
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 .endLetter:
     pop esi
     inc esi                 ; increase the word counter
@@ -627,4 +945,4 @@ quit:
     mov     ebx, 0
     mov     eax, 1
     int     80h
-    ret   
+    ret 
