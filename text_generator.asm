@@ -99,14 +99,39 @@ readText:
     push ebx
     push ecx
     push edx
-    mov edi, ebx            ; edi holds the direction of the binary
     
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
     ; vertical line
     mov eax, 2              ; x1 coordinate
     mov ebx, 2              ; y1 coordinate
     mov ecx, 2              ; x2 coordinate
     mov edx, 6              ; y2 coordinate
-    call drawLine
+    call drawLine           ; call draw line function
+    
+    pop edi
+    ;mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+    
+    ; vertical line
+    mov eax, 6              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
     
     pop edx
     pop ecx
@@ -116,9 +141,9 @@ readText:
     
 .endLetter:
 
-    inc esi
-    inc eax
-    cmp byte[eax], 0
+    inc esi                 ; increase the word counter
+    inc eax                 ; increase the text direction
+    cmp byte[eax], 0        ; if the text is not null analyse next character
     jnz .nextChar
 
 .finish:
@@ -182,51 +207,59 @@ drawLine:
     push ecx
     push edx
     
-    mov eax, edi
-    call iprintLF
-    
     mov edx, 0
-    mov eax, esi
-    call iprintLF
     mov ecx, 42         ; the amount of characters that fit in a line
     div ecx             ; eax / 42. eax gets the qoutient and edx the remainder
-    call iprintLF
     mov ecx, 252        ; the amount of pixels in a line
     mul ecx             ; eax * 253. eax saves the result
     mov ecx, 6          ; because each line has 6 pixels of height
     mul ecx             ; eax * 6
-    call iprintLF
     add edi, eax        ; add to the array direction the total amount of pixels for the lines
     mov eax, edx        ; add the own line pixels
     mul ecx             ; multiply by 6, each character has 6 pixels
     add edi, eax        ; complete the own line addition of pixels
-    
-    mov eax, edi
-    call iprintLF
         
     pop edx
     pop ecx
     pop ebx
     pop eax
-    
-    
-    
+  
     add edi, eax        ; add the x1 coordinate to begin the calculations where it has to be
+    
     cmp eax, ecx
     jz .verticalLine    ; if both x coordinates are the same, it is a vertical line
     
+    cmp ebx, edx
+    jz .horizontalLine  ; if both y coordinates are the same, it is an horizontal line
+    
+    jmp .finish         ; if it is neither of the options dont do the drawing
+    
 .verticalLine:
-    add edi, 253        ; since the first line doesn't has anything
+    add edi, 253        ; since the first line doesn't has anything add 253 (the necessary to go to the next line)
 
-    mov al, 48
-
-    mov byte[edi], al      ; add a 0 in this space of memory
-    inc ebx             ; y1 ++
-
+    mov al, 48         
+    mov byte[edi], al   ; add a 0 in this space of memory ('0' ascii is 48)
+    
+    inc ebx
     cmp ebx, edx        ; if y1 > y2 then the process is over
     jg .finish
-    jmp .verticalLine
-    
+    jmp .verticalLine   ; if y1 <= y2 then go for the next line
+        
+.horizontalLine:
+    add edi, 253        ; pass to a new line until we reaxh the y level
+    sub ebx, 1
+    cmp ebx, 0
+    jnz .horLineAux     ; jump to auxiliar function to print horizontal line
+
+.horLineAux:
+    mov bl, 48         
+    mov byte[edi], bl   ; add a 0 in this space of memory ('0' ascii is 48)
+    inc edi             ; increase the direction by a unit
+    inc eax             ; increase the y1 to cover the rest of the line
+    cmp eax, ecx        ; when y1 > y2 then the line is already painted
+    jg .finish
+    jmp .horLineAux     ; if y1 < y2 continue painting
+            
 .finish:
     ret
 
@@ -243,19 +276,17 @@ fillOnes:
    mov ecx, 0                   ; ecx will hold the counter
  
 .fillNext:
-   mov bl, 49                  ; 49 is ascii for '1'
-   mov byte[eax + ecx], bl         ; add '1' into the direction given
+   mov bl, 49                   ; 49 is ascii for '1'
+   mov byte[eax + ecx], bl      ; add '1' into the direction given
    inc ecx                      ; increase the counter
    mov ebx, 63756               ; 63756 is the total amount of pixels in the image
 
-   cmp ecx, ebx                 ; compare 63504 with the counter to finish the process
+   cmp ecx, ebx                 ; compare 63756 with the counter to finish the process
    jnz .fillNext
    
    inc ecx
-   mov bl, 0                  ; 49 is ascii for 'null'
-   mov byte[eax + ecx], bl         ; add 'null' into the direction given
-   
-   
+   mov bl, 0                    ; 49 is ascii for 'null'
+   mov byte[eax + ecx], bl      ; add 'null' into the direction given
    
 .finish:
    pop ebx
