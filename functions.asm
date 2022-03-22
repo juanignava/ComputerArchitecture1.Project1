@@ -52,6 +52,61 @@ readText:
     cmp byte[eax], 108      ; check if letter = 'l'
     jz .lLetter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
     
+    cmp byte[eax], 109      ; check if letter = 'm'
+    jz .mLetter 
+    
+    cmp byte[eax], 110      ; check if letter = 'n'
+    jz .nLetter 
+    
+    cmp byte[eax], 111      ; check if letter = 'o'
+    jz .oLetter 
+    
+    cmp byte[eax], 112      ; check if letter = 'p'
+    jz .pLetter 
+    
+    cmp byte[eax], 113      ; check if letter = 'q'
+    jz .qLetter 
+    
+    cmp byte[eax], 114      ; check if letter = 'r'
+    jz .rLetter
+    
+    cmp byte[eax], 115      ; check if letter = 's'
+    jz .sLetter
+    
+    cmp byte[eax], 116      ; check if letter = 't'
+    jz .tLetter 
+    
+    cmp byte[eax], 117      ; check if letter = 'u'
+    jz .uLetter 
+    
+    cmp byte[eax], 118      ; check if letter = 'v'
+    jz .vLetter 
+    
+    cmp byte[eax], 119      ; check if letter = 'w'
+    jz .wLetter 
+    
+    cmp byte[eax], 120      ; check if letter = 'x'
+    jz .xLetter 
+    
+    cmp byte[eax], 121      ; check if letter = 'y'
+    jz .yLetter 
+    
+    cmp byte[eax], 122      ; check if letter = 'z'
+    jz .zLetter
+    
+    cmp byte[eax], 44      ; check if letter = ','
+    jz .commaLetter 
+    
+    cmp byte[eax], 46      ; check if letter = '.'
+    jz .dotLetter
+    
+    cmp byte[eax], 123      ; check if letter = signature 1
+    jz .sig1Letter
+    
+    cmp byte[eax], 124      ; check if letter = signature 2
+    jz .sig2Letter  
+
+    
     jmp .endLetter          ; no coincidence doesn't print
     
 .aLetter:
@@ -640,8 +695,912 @@ readText:
     pop eax
     jmp .endLetter
 
+.lLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
 
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+    
+.mLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; vertical line
+    mov eax, 6              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; neg slope line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 4              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; pos slope line
+    mov eax, 4              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+.nLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    ;mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+    
+    ; vertical line
+    mov eax, 6              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; neg slope line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.oLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 3              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 5              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    ;mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+    
+    ; vertical line
+    mov eax, 6              ; x1 coordinate
+    mov ebx, 3              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 5              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 3              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 3              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.pLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    ;mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+    
+    ; vertical line
+    mov eax, 5              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.qLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 3              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 5              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    ;mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+    
+    ; vertical line
+    mov eax, 6              ; x1 coordinate
+    mov ebx, 3              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 5              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 3              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 3              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; neg slope line
+    mov eax, 4              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi    
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.rLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    ;mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+    
+    ; vertical line
+    mov eax, 5              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; neg slope line
+    mov eax, 3              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi    
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.sLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    ;mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+    
+    ; vertical line
+    mov eax, 6              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.tLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 4              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 4              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.uLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 5              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    ;mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+    
+    ; vertical line
+    mov eax, 6              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 5              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 3              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.vLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    ;mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+    
+    ; vertical line
+    mov eax, 6              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; neg slope line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 4              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; pos slope line
+    mov eax, 4              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.wLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 5              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    ;mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+    
+    ; vertical line
+    mov eax, 6              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 5              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; pos slope line
+    mov eax, 3              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 4              ; x2 coordinate
+    mov edx, 5              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; neg slope line
+    mov eax, 4              ; x1 coordinate
+    mov ebx, 5              ; y1 coordinate
+    mov ecx, 5              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.xLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; neg slope line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; vertical line
+    mov eax, 6              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.yLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; neg slope line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 4              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    ;mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+    
+    ; pos slope line
+    mov eax, 6              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.zLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; pos slope line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.commaLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 3              ; x1 coordinate
+    mov ebx, 3              ; y1 coordinate
+    mov ecx, 3              ; x2 coordinate
+    mov edx, 5              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; pos slope line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 3              ; x2 coordinate
+    mov edx, 5              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.dotLetter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 5              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; vertical line
+    mov eax, 3              ; x1 coordinate
+    mov ebx, 5              ; y1 coordinate
+    mov ecx, 3              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.sig1Letter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; vertical line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 2              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; vertical line
+    mov eax, 4              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 4              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; vertical line
+    mov eax, 6              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
+.sig2Letter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; pos slope line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 4              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; pos slope line
+    mov eax, 4              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; neg slope line
+    mov eax, 4              ; x1 coordinate
+    mov ebx, 2              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 4              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; neg slope line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 4              ; y1 coordinate
+    mov ecx, 4              ; x2 coordinate
+    mov edx, 6              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    jmp .endLetter
+
 .endLetter:
     pop esi
     inc esi                 ; increase the word counter
@@ -945,4 +1904,5 @@ quit:
     mov     ebx, 0
     mov     eax, 1
     int     80h
-    ret 
+    ret
+
