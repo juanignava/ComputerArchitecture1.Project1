@@ -16,11 +16,11 @@ textFileSize db 1764                ; the maximum amount of characters on the fi
 
 ; binary file
 binaryFilename db 'binary.txt', 0h    ; the filename to write
-binaryFileSize db 63504
+binaryFileSize db 63756
 
 SECTION .bss
 textFileContents resb 1764,      ; variable to store file contents
-binaryFileContents resb 63504    ; variable to store the binary result
+binaryFileContents resb 63756    ; variable to store the binary result
 
 SECTION .text
 global _start
@@ -85,6 +85,8 @@ readText:
     push ebx
     push ecx
     push esi
+    mov esi, ebx
+    call drawNewLines
     mov esi, 0                  ; character counter
     
 .nextChar:
@@ -93,11 +95,6 @@ readText:
     jmp .endLetter
     
 .aLetter:
-    ;;
-    push eax
-    call sprintLF
-    pop eax
-    ;;
     push eax
     push ebx
     push ecx
@@ -119,7 +116,7 @@ readText:
     
 .endLetter:
 
-    inc ecx
+    inc esi
     inc eax
     cmp byte[eax], 0
     jnz .nextChar
@@ -129,6 +126,47 @@ readText:
     pop ecx
     pop ebx
     pop eax
+    ret
+
+;------------------------------------------
+; void drawNewLines()
+; add the new line character in the memory to see
+; better the document
+; input: esi -> direction
+drawNewLines:
+    push esi
+    push eax
+    push ecx
+    push edx
+    push ebx
+    mov ebx, 0                  ; ebx is the counter of bytes
+    
+.loop:
+    inc ebx                     ; increase counter
+    mov edx, 0                  ; edx has to be 0 before division
+    mov ecx, 253                ; divide eax/253 and if there is no remainder that is a new line character position
+    mov eax, ebx
+    div ecx
+    cmp edx, 0
+    jnz .loop                   ; if there is remainder try with the next character
+    
+    ;mov ecx, 10                 ; save the ascii of a new line in the given direction
+    ;mov [esi + ebx], ecx
+    mov cl, 10                 ; save the ascii of a new line in the given direction
+    mov byte[esi + ebx], cl
+    
+    mov ecx, 252
+    ;mov eax, ebx
+    ;div ecx
+    cmp eax, ecx                ; if 252 have been analysed then finish the process
+    jnz .loop
+    
+.finish:
+    pop ebx
+    pop edx
+    pop ecx
+    pop eax
+    pop esi
     ret
 
 ;------------------------------------------
@@ -168,8 +206,8 @@ drawLine:
     
 .verticalLine:
     add edi, 252        ; since the first line doesn't has anything
-    mov esi, 48
-    mov [edi], esi      ; add a 0 in this space of memory
+    mov al, 48
+    mov byte[edi], al      ; add a 0 in this space of memory
     inc ebx             ; y1 ++
     cmp ebx, edx        ; if y1 > y2 then the process is over
     jg .finish
@@ -191,15 +229,22 @@ fillOnes:
    mov ecx, 0                   ; ecx will hold the counter
  
 .fillNext:
-   mov ebx, 49                  ; 49 is ascii for '1'
-   mov [eax + ecx], ebx         ; add '1' into the direction given
+   mov bl, 49                  ; 49 is ascii for '1'
+   mov byte[eax + ecx], bl         ; add '1' into the direction given
    inc ecx                      ; increase the counter
-   mov ebx, 63504               ; 63504 is the total amount of pixels in the image
+   mov ebx, 63756               ; 63756 is the total amount of pixels in the image
+
    cmp ecx, ebx                 ; compare 63504 with the counter to finish the process
    jnz .fillNext
+   ;;
+   ;inc ecx
+   ;mov ebx, 3                  ; 49 is ascii for '1'
+   ;mov [eax + ecx], ebx         ; add '1' into the direction given
+   
+   ;;
    
 .finish:
    pop ebx
    pop ecx
    pop eax
-   ret 
+   ret  
