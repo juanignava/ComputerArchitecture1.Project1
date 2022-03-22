@@ -140,18 +140,19 @@ drawNewLines:
     push edx
     push ebx
     mov ebx, 0                  ; ebx is the counter of bytes
+    mov cl, 10                 ; save the ascii of a new line in the given direction
+    mov byte[esi + ebx], cl
     
 .loop:
-    inc ebx                     ; increase counter
+    inc ebx                     ; increase counter 
     mov edx, 0                  ; edx has to be 0 before division
     mov ecx, 253                ; divide eax/253 and if there is no remainder that is a new line character position
     mov eax, ebx
     div ecx
+
     cmp edx, 0
     jnz .loop                   ; if there is remainder try with the next character
     
-    ;mov ecx, 10                 ; save the ascii of a new line in the given direction
-    ;mov [esi + ebx], ecx
     mov cl, 10                 ; save the ascii of a new line in the given direction
     mov byte[esi + ebx], cl
     
@@ -236,15 +237,15 @@ fillOnes:
 
    cmp ecx, ebx                 ; compare 63504 with the counter to finish the process
    jnz .fillNext
-   ;;
-   ;inc ecx
-   ;mov ebx, 3                  ; 49 is ascii for '1'
-   ;mov [eax + ecx], ebx         ; add '1' into the direction given
    
-   ;;
+   inc ecx
+   mov bl, 0                  ; 49 is ascii for 'null'
+   mov byte[eax + ecx], bl         ; add 'null' into the direction given
+   
+   
    
 .finish:
    pop ebx
    pop ecx
    pop eax
-   ret  
+   ret 
