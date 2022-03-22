@@ -87,12 +87,12 @@ readText:
     push esi
     mov esi, ebx
     call drawNewLines
-    mov esi, 0                  ; character counter
+    mov esi, 0              ; character counter
     
 .nextChar:
-    cmp byte[eax], 97
+    cmp byte[eax], 97       ; check if letter = 'a'
     jz .aLetter
-    jmp .endLetter
+    jmp .endLetter          ; no coincidence doesn't print
     
 .aLetter:
     push eax
@@ -139,7 +139,7 @@ drawNewLines:
     push ecx
     push edx
     push ebx
-    mov ebx, 0                  ; ebx is the counter of bytes
+    mov ebx, 0                 ; ebx is the counter of bytes
     mov cl, 10                 ; save the ascii of a new line in the given direction
     mov byte[esi + ebx], cl
     
@@ -153,12 +153,10 @@ drawNewLines:
     cmp edx, 0
     jnz .loop                   ; if there is remainder try with the next character
     
-    mov cl, 10                 ; save the ascii of a new line in the given direction
-    mov byte[esi + ebx], cl
+    mov cl, 10                  ; save the ascii of a new line in the given direction
+    mov byte[esi + ebx], cl     
     
-    mov ecx, 252
-    ;mov eax, ebx
-    ;div ecx
+    mov ecx, 252                ; check the amount of lines analysed
     cmp eax, ecx                ; if 252 have been analysed then finish the process
     jnz .loop
     
@@ -184,32 +182,47 @@ drawLine:
     push ecx
     push edx
     
+    mov eax, edi
+    call iprintLF
+    
+    mov edx, 0
     mov eax, esi
+    call iprintLF
     mov ecx, 42         ; the amount of characters that fit in a line
     div ecx             ; eax / 42. eax gets the qoutient and edx the remainder
+    call iprintLF
     mov ecx, 252        ; the amount of pixels in a line
-    mul ecx             ; eax * 252. eax saves the result
+    mul ecx             ; eax * 253. eax saves the result
     mov ecx, 6          ; because each line has 6 pixels of height
     mul ecx             ; eax * 6
+    call iprintLF
     add edi, eax        ; add to the array direction the total amount of pixels for the lines
     mov eax, edx        ; add the own line pixels
     mul ecx             ; multiply by 6, each character has 6 pixels
     add edi, eax        ; complete the own line addition of pixels
+    
+    mov eax, edi
+    call iprintLF
         
     pop edx
     pop ecx
     pop ebx
     pop eax
     
+    
+    
     add edi, eax        ; add the x1 coordinate to begin the calculations where it has to be
     cmp eax, ecx
     jz .verticalLine    ; if both x coordinates are the same, it is a vertical line
     
 .verticalLine:
-    add edi, 252        ; since the first line doesn't has anything
+    add edi, 253        ; since the first line doesn't has anything
+
     mov al, 48
+
     mov byte[edi], al      ; add a 0 in this space of memory
     inc ebx             ; y1 ++
+
     cmp ebx, edx        ; if y1 > y2 then the process is over
     jg .finish
     jmp .verticalLine
