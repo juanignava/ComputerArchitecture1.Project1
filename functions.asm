@@ -107,7 +107,7 @@ readText:
     jz .sig2Letter  
 
     
-    jmp .endLetter          ; no coincidence doesn't print
+    jmp .endLetter ; no coincidence doesn't print
     
 .aLetter:
     push eax
@@ -1341,11 +1341,11 @@ readText:
     pop edi
     push edi
     
-    ; vertical line
-    mov eax, 6              ; x1 coordinate
-    mov ebx, 2              ; y1 coordinate
-    mov ecx, 2              ; x2 coordinate
-    mov edx, 6              ; y2 coordinate
+    ; pos slope line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
     call drawLine           ; call draw line function
     
     pop edi
@@ -1377,10 +1377,10 @@ readText:
     push edi
     
     ; pos slope line
-    mov eax, 6              ; x1 coordinate
-    mov ebx, 2              ; y1 coordinate
-    mov ecx, 2              ; x2 coordinate
-    mov edx, 6              ; y2 coordinate
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 6              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 2              ; y2 coordinate
     call drawLine           ; call draw line function
     
     pop edi
@@ -1547,6 +1547,7 @@ readText:
     pop eax
     jmp .endLetter
 
+
 .sig2Letter:
     push eax
     push ebx
@@ -1599,6 +1600,7 @@ readText:
     pop ecx
     pop ebx
     pop eax
+
     jmp .endLetter
 
 .endLetter:
@@ -1607,8 +1609,7 @@ readText:
     inc eax                 ; increase the text direction
     cmp byte[eax], 0        ; if the text is not null analyse next character
     jnz .nextChar
-    
-
+   
 
 .finish:
     pop esi
@@ -1905,4 +1906,3 @@ quit:
     mov     eax, 1
     int     80h
     ret
-

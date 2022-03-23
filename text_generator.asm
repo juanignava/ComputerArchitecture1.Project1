@@ -47,6 +47,18 @@ _start:
     mov     eax, 6              ; invoke SYS_CLOSE (kernel opcode 6)
     int     80h                 ; call the kernel
     
+    ; add the signature
+    ;mov bl, 123
+    ;mov eax, textFileContents
+    ;call iprintLF
+    ;add eax, 1762
+    ;call iprintLF
+    ;inc eax
+    ;mov byte[eax], bl
+    ;mov bl, 124
+    ;inc eax
+    ;mov byte[eax], bl
+    
     ; fill binary array with ones
     mov eax, binaryFileContents ; load the binaryFile into the eax register
     call fillOnes               ; fill the file with ones first
