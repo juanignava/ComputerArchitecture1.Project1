@@ -22,25 +22,16 @@ int init(int w, int h, int argc, char *args[]);
 int main(int argc, char *argv[])
 {
     // SDL Window setup
-	if (init(SCREEN_WIDTH, SCREEN_HEIGHT, argc, argv) == 1) {
-		
-		return 0;
-	}
+	if (init(SCREEN_WIDTH, SCREEN_HEIGHT, argc, argv) == 1) return 0;
 
     int quit = 0;
-
     SDL_RenderClear(renderer);
-
     FILE* ptr;
     char ch;
 
     // Opening file in reading mode
     ptr = fopen("binary.txt", "r");
-
     if (NULL == ptr) printf("file can't be opened \n");
-
-    printf("content of this file are \n");
-
     int counter = 1;
     int line, column;
     do
@@ -75,22 +66,16 @@ int main(int argc, char *argv[])
 
     SDL_UpdateTexture(screen_texture, NULL, screen->pixels, screen->w * sizeof (Uint32));
     SDL_RenderCopy(renderer, screen_texture, NULL, NULL);
-
-		//draw to the display
     SDL_RenderPresent(renderer);
 
     while (quit == 0)
     {
         SDL_PumpEvents();
-
         const Uint8 *keystate = SDL_GetKeyboardState(NULL);
-
         if (keystate[SDL_SCANCODE_ESCAPE]) quit = 1;
         SDL_Delay(200);
-
     }
     
-
     return 0;
 }
 
@@ -98,31 +83,23 @@ int init(int width, int height, int argc, char *args[]) {
 
     //Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-		
 		return 1;
 	} 
 
     int i;
-
     for (i = 0; i < argc; i++) {
 		
 		//Create window	
-		if(strcmp(args[i], "-f")) {
-			
+		if(strcmp(args[i], "-f")) {	
 			SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN, &window, &renderer);
-		
 		} else {
-		
 			SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_FULLSCREEN_DESKTOP, &window, &renderer);
 		}
 	}
 
     if (window == NULL) { 
-		
 		printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-		
 		return 1;
 	}
 
@@ -132,7 +109,6 @@ int init(int width, int height, int argc, char *args[]) {
 	if (screen == NULL) {
 		
 		printf("Could not create the screen surfce! SDL_Error: %s\n", SDL_GetError());
-
 		return 1;
 	}
 
@@ -142,7 +118,6 @@ int init(int width, int height, int argc, char *args[]) {
 	if (screen_texture == NULL) {
 		
 		printf("Could not create the screen_texture! SDL_Error: %s\n", SDL_GetError());
-
 		return 1;
 	}
 }

@@ -100,12 +100,14 @@ readText:
     cmp byte[eax], 46      ; check if letter = '.'
     jz .dotLetter
     
-    cmp byte[eax], 123      ; check if letter = signature 1
-    jz .sig1Letter
+    ;cmp byte[eax], 123      ; check if letter = signature 1
+    ;jz .sig1Letter
     
-    cmp byte[eax], 124      ; check if letter = signature 2
-    jz .sig2Letter  
+    ;cmp byte[eax], 124      ; check if letter = signature 2
+    ;jz .sig2Letter  
 
+    ;cmp byte[eax], 3      ; check if letter = signature 2
+    ;jz .endLetter  
     
     jmp .endLetter ; no coincidence doesn't print
     
@@ -1503,6 +1505,13 @@ readText:
     pop eax
     jmp .endLetter
 
+.endLetter:
+    pop esi
+    inc esi                 ; increase the word counter
+    inc eax                 ; increase the text direction
+    cmp byte[eax], 0        ; if the text is not null analyse next character
+    jnz .nextChar
+    
 .sig1Letter:
     push eax
     push ebx
@@ -1545,8 +1554,9 @@ readText:
     pop ecx
     pop ebx
     pop eax
-    jmp .endLetter
-
+    
+    inc esi                 ; increase the word counter
+    inc eax                 ; increase the text direction
 
 .sig2Letter:
     push eax
@@ -1601,14 +1611,41 @@ readText:
     pop ebx
     pop eax
 
-    jmp .endLetter
-
-.endLetter:
-    pop esi
     inc esi                 ; increase the word counter
     inc eax                 ; increase the text direction
-    cmp byte[eax], 0        ; if the text is not null analyse next character
-    jnz .nextChar
+
+.sig3Letter:
+    push eax
+    push ebx
+    push ecx
+    push edx
+    
+    mov edi, ebx            ; edi holds the direction of the binary
+    push edi
+
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 3              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 3              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    push edi
+    
+    ; horizontal line
+    mov eax, 2              ; x1 coordinate
+    mov ebx, 5              ; y1 coordinate
+    mov ecx, 6              ; x2 coordinate
+    mov edx, 5              ; y2 coordinate
+    call drawLine           ; call draw line function
+    
+    pop edi
+    
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
    
 
 .finish:

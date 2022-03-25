@@ -19,7 +19,7 @@ binaryFilename db 'binary.txt', 0h    ; the filename to write
 binaryFileSize db 63756
 
 SECTION .bss
-textFileContents resb 1764,      ; variable to store file contents
+textFileContents resb 1764    ; variable to store file contents
 binaryFileContents resb 63756    ; variable to store the binary result
 
 SECTION .text
@@ -51,7 +51,7 @@ _start:
     ;mov bl, 123
     ;mov eax, textFileContents
     ;call iprintLF
-    ;add eax, 1762
+    ;add eax, textFileSize
     ;call iprintLF
     ;inc eax
     ;mov byte[eax], bl
