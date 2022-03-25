@@ -15,7 +15,10 @@ readText:
     mov esi, 0              ; character counter
     
 .nextChar:
+    
+    call checkSpace
     push esi
+        
     cmp byte[eax], 97       ; check if letter = 'a'
     jz .aLetter
     
@@ -99,15 +102,6 @@ readText:
     
     cmp byte[eax], 46      ; check if letter = '.'
     jz .dotLetter
-    
-    ;cmp byte[eax], 123      ; check if letter = signature 1
-    ;jz .sig1Letter
-    
-    ;cmp byte[eax], 124      ; check if letter = signature 2
-    ;jz .sig2Letter  
-
-    ;cmp byte[eax], 3      ; check if letter = signature 2
-    ;jz .endLetter  
     
     jmp .endLetter ; no coincidence doesn't print
     
@@ -1943,3 +1937,46 @@ quit:
     mov     eax, 1
     int     80h
     ret
+
+;-----------------------------------------
+; void checkSpace() 
+; esi -> counter of letters
+; eax -> direction of the text   
+checkSpace:
+    push eax
+    push ebx
+    push ecx
+    push edx
+
+    mov ebx, eax        ; save in ebx the current direction
+    mov eax, esi        ; eax is needed for the operations
+    mov ecx, 42         ; 42 is the amount of characters that fit in a line
+    mov edx, 0          ; for a correct functionality of div
+    div ecx             ; save eax = eax / 42 and edx = eax % 42
+    sub ecx, edx        ; ecx saves the amount of characters left in the line
+    
+    mov eax, 0          ; let eax be a counter
+    
+.loop:
+    cmp byte[ebx], 0    ; stop counting if the character is a null
+    jz .decide
+    inc eax             ; increase the counter and the direction of analysis
+    inc ebx
+    cmp byte[ebx], 32   ; comparte the value in the direction with an space (ascci 32)
+    jnz .loop
+
+.decide:
+    cmp eax, ecx        ; if the amount of characters before the space is less than the ones that fit
+    jle .finish
+    sub ecx, 1          
+    add esi, ecx        ; add more to the character counter to avoid cutting the word
+    
+.finish:
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    ret
+    
+ 
+    
